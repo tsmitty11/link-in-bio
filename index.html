@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Thomas Smith</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+    body {
+      font-family: 'Inter', sans-serif;
+      transition: background-color 0.5s ease, background-image 0.5s ease;
+    }
+
+    .link-btn {
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.5s ease,
+                  border-color 0.5s ease, color 0.5s ease;
+    }
+
+    .link-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+
+    .link-btn:active {
+      transform: translateY(0);
+    }
+
+    .avatar-ring {
+      transition: border-color 0.5s ease, box-shadow 0.5s ease;
+    }
+
+    .name-text {
+      transition: color 0.5s ease;
+    }
+
+    .bio-text {
+      transition: color 0.5s ease;
+    }
+
+    .randomize-btn {
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Background textures */
+    .texture-dots {
+      background-image: radial-gradient(circle, currentColor 1px, transparent 1px);
+      background-size: 20px 20px;
+    }
+
+    .texture-grid {
+      background-image:
+        linear-gradient(currentColor 1px, transparent 1px),
+        linear-gradient(90deg, currentColor 1px, transparent 1px);
+      background-size: 30px 30px;
+    }
+
+    .texture-diagonal {
+      background-image: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        currentColor 10px,
+        currentColor 11px
+      );
+    }
+
+    .texture-waves {
+      background-image:
+        radial-gradient(ellipse at 50% 0%, currentColor 30%, transparent 70%);
+      background-size: 40px 20px;
+    }
+
+    .texture-cross {
+      background-image:
+        linear-gradient(currentColor 2px, transparent 2px),
+        linear-gradient(90deg, currentColor 2px, transparent 2px);
+      background-size: 40px 40px;
+      background-position: center center;
+    }
+
+    .texture-triangles {
+      background-image:
+        linear-gradient(60deg, currentColor 25%, transparent 25%),
+        linear-gradient(-60deg, currentColor 25%, transparent 25%);
+      background-size: 20px 28px;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex items-start justify-center px-4 py-12">
+
+  <!-- Background texture overlay -->
+  <div id="texture-overlay" class="fixed inset-0 pointer-events-none opacity-[0.03]"></div>
+
+  <div class="w-full max-w-md relative z-10">
+
+    <!-- Avatar -->
+    <div class="flex flex-col items-center mb-8">
+      <div class="avatar-ring w-28 h-28 rounded-full border-4 border-gray-800 p-1 mb-4 shadow-lg">
+        <img
+          id="avatar"
+          src="https://api.dicebear.com/9.x/initials/svg?seed=TS&backgroundColor=1e293b&textColor=f8fafc"
+          alt="Thomas Smith"
+          class="w-full h-full rounded-full object-cover"
+        />
+      </div>
+      <h1 class="name-text text-2xl font-bold text-gray-900">Thomas Smith</h1>
+      <p class="bio-text text-sm text-gray-500 mt-1 text-center max-w-xs">Developer, creator, builder of things.</p>
+    </div>
+
+    <!-- Links -->
+    <div class="flex flex-col gap-3 mb-10">
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-gray-900 text-white font-semibold text-sm">
+        Portfolio
+      </a>
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        GitHub
+      </a>
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Twitter / X
+      </a>
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        LinkedIn
+      </a>
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Blog
+      </a>
+      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Email Me
+      </a>
+    </div>
+
+    <!-- Randomize Button -->
+    <div class="flex justify-center">
+      <button
+        id="randomize-btn"
+        onclick="randomize()"
+        class="randomize-btn flex items-center gap-2 px-5 py-2.5 rounded-full bg-gray-100 text-gray-500 text-xs font-medium hover:bg-gray-200 active:scale-95 transition-transform"
+      >
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+        </svg>
+        Randomize
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    const schemes = [
+      {
+        bg: '#fafafa',
+        textureTint: '#000000',
+        name: '#111827',
+        bio: '#6b7280',
+        primaryBtn: { bg: '#111827', border: '#111827', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#111827', text: '#111827' },
+        ring: '#111827',
+        randomize: { bg: '#f3f4f6', text: '#6b7280' },
+      },
+      {
+        bg: '#fdf2f8',
+        textureTint: '#ec4899',
+        name: '#831843',
+        bio: '#9d174d',
+        primaryBtn: { bg: '#db2777', border: '#db2777', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#f472b6', text: '#9d174d' },
+        ring: '#ec4899',
+        randomize: { bg: '#fce7f3', text: '#9d174d' },
+      },
+      {
+        bg: '#f0fdf4',
+        textureTint: '#22c55e',
+        name: '#14532d',
+        bio: '#166534',
+        primaryBtn: { bg: '#16a34a', border: '#16a34a', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#4ade80', text: '#166534' },
+        ring: '#22c55e',
+        randomize: { bg: '#dcfce7', text: '#166534' },
+      },
+      {
+        bg: '#0f172a',
+        textureTint: '#60a5fa',
+        name: '#f1f5f9',
+        bio: '#94a3b8',
+        primaryBtn: { bg: '#3b82f6', border: '#3b82f6', text: '#ffffff' },
+        secondaryBtn: { bg: '#1e293b', border: '#334155', text: '#e2e8f0' },
+        ring: '#3b82f6',
+        randomize: { bg: '#1e293b', text: '#94a3b8' },
+      },
+      {
+        bg: '#fefce8',
+        textureTint: '#eab308',
+        name: '#422006',
+        bio: '#713f12',
+        primaryBtn: { bg: '#ca8a04', border: '#ca8a04', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#fbbf24', text: '#713f12' },
+        ring: '#eab308',
+        randomize: { bg: '#fef9c3', text: '#713f12' },
+      },
+      {
+        bg: '#faf5ff',
+        textureTint: '#a855f7',
+        name: '#3b0764',
+        bio: '#6b21a8',
+        primaryBtn: { bg: '#9333ea', border: '#9333ea', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#c084fc', text: '#6b21a8' },
+        ring: '#a855f7',
+        randomize: { bg: '#f3e8ff', text: '#6b21a8' },
+      },
+      {
+        bg: '#fff7ed',
+        textureTint: '#f97316',
+        name: '#431407',
+        bio: '#9a3412',
+        primaryBtn: { bg: '#ea580c', border: '#ea580c', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#fb923c', text: '#9a3412' },
+        ring: '#f97316',
+        randomize: { bg: '#ffedd5', text: '#9a3412' },
+      },
+      {
+        bg: '#1a1a2e',
+        textureTint: '#e94560',
+        name: '#eaeaea',
+        bio: '#a0a0b0',
+        primaryBtn: { bg: '#e94560', border: '#e94560', text: '#ffffff' },
+        secondaryBtn: { bg: '#16213e', border: '#e94560', text: '#eaeaea' },
+        ring: '#e94560',
+        randomize: { bg: '#16213e', text: '#a0a0b0' },
+      },
+      {
+        bg: '#ecfdf5',
+        textureTint: '#14b8a6',
+        name: '#064e3b',
+        bio: '#065f46',
+        primaryBtn: { bg: '#0d9488', border: '#0d9488', text: '#ffffff' },
+        secondaryBtn: { bg: '#ffffff', border: '#2dd4bf', text: '#065f46' },
+        ring: '#14b8a6',
+        randomize: { bg: '#ccfbf1', text: '#065f46' },
+      },
+      {
+        bg: '#18181b',
+        textureTint: '#a1a1aa',
+        name: '#fafafa',
+        bio: '#a1a1aa',
+        primaryBtn: { bg: '#fafafa', border: '#fafafa', text: '#18181b' },
+        secondaryBtn: { bg: '#27272a', border: '#3f3f46', text: '#e4e4e7' },
+        ring: '#fafafa',
+        randomize: { bg: '#27272a', text: '#a1a1aa' },
+      },
+    ];
+
+    const textures = [
+      'none',
+      'texture-dots',
+      'texture-grid',
+      'texture-diagonal',
+      'texture-waves',
+      'texture-cross',
+      'texture-triangles',
+    ];
+
+    let currentSchemeIndex = 0;
+
+    function randomize() {
+      // Pick a different scheme than the current one
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * schemes.length);
+      } while (newIndex === currentSchemeIndex && schemes.length > 1);
+      currentSchemeIndex = newIndex;
+
+      const scheme = schemes[newIndex];
+      const texture = textures[Math.floor(Math.random() * textures.length)];
+
+      // Apply background
+      document.body.style.backgroundColor = scheme.bg;
+
+      // Apply texture overlay
+      const overlay = document.getElementById('texture-overlay');
+      overlay.className = 'fixed inset-0 pointer-events-none opacity-[0.04]';
+      if (texture !== 'none') {
+        overlay.classList.add(texture);
+        overlay.style.color = scheme.textureTint;
+      }
+
+      // Apply name and bio colors
+      document.querySelector('.name-text').style.color = scheme.name;
+      document.querySelector('.bio-text').style.color = scheme.bio;
+
+      // Apply avatar ring
+      const ring = document.querySelector('.avatar-ring');
+      ring.style.borderColor = scheme.ring;
+
+      // Apply button styles
+      const buttons = document.querySelectorAll('.link-btn');
+      buttons.forEach((btn, i) => {
+        if (i === 0) {
+          btn.style.backgroundColor = scheme.primaryBtn.bg;
+          btn.style.borderColor = scheme.primaryBtn.border;
+          btn.style.color = scheme.primaryBtn.text;
+        } else {
+          btn.style.backgroundColor = scheme.secondaryBtn.bg;
+          btn.style.borderColor = scheme.secondaryBtn.border;
+          btn.style.color = scheme.secondaryBtn.text;
+        }
+      });
+
+      // Apply randomize button styles
+      const randomizeBtn = document.getElementById('randomize-btn');
+      randomizeBtn.style.backgroundColor = scheme.randomize.bg;
+      randomizeBtn.style.color = scheme.randomize.text;
+
+      // Update avatar background to match scheme
+      const avatar = document.getElementById('avatar');
+      const avatarBg = scheme.primaryBtn.bg.replace('#', '');
+      const avatarText = scheme.primaryBtn.text.replace('#', '');
+      avatar.src = `https://api.dicebear.com/9.x/initials/svg?seed=TS&backgroundColor=${avatarBg}&textColor=${avatarText}`;
+    }
+  </script>
+
+</body>
+</html>
