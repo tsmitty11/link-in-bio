@@ -7,6 +7,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap');
 
     body {
       font-family: 'Inter', sans-serif;
@@ -15,7 +16,8 @@
 
     .link-btn {
       transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.5s ease,
-                  border-color 0.5s ease, color 0.5s ease;
+                  border-color 0.5s ease, color 0.5s ease, font-family 0.3s ease,
+                  backdrop-filter 0.5s ease, letter-spacing 0.3s ease;
     }
 
     .link-btn:hover {
@@ -32,15 +34,97 @@
     }
 
     .name-text {
-      transition: color 0.5s ease;
+      transition: color 0.5s ease, font-family 0.3s ease, letter-spacing 0.3s ease,
+                  text-shadow 0.5s ease;
     }
 
     .bio-text {
-      transition: color 0.5s ease;
+      transition: color 0.5s ease, font-family 0.3s ease, letter-spacing 0.3s ease;
     }
 
     .randomize-btn {
       transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    /* Video background */
+    #video-bg {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+
+    #video-bg.active {
+      opacity: 1;
+    }
+
+    /* Dark overlay for video readability */
+    #video-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 5, 20, 0.55);
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      pointer-events: none;
+    }
+
+    #video-overlay.active {
+      opacity: 1;
+    }
+
+    /* Turbo mode sci-fi glow effects */
+    .turbo-glow {
+      text-shadow: 0 0 10px rgba(120, 200, 255, 0.6), 0 0 30px rgba(120, 200, 255, 0.3);
+    }
+
+    .turbo-btn-glow {
+      box-shadow: 0 0 15px rgba(120, 200, 255, 0.2), inset 0 0 15px rgba(120, 200, 255, 0.05);
+    }
+
+    .turbo-btn-glow:hover {
+      box-shadow: 0 0 25px rgba(120, 200, 255, 0.4), inset 0 0 20px rgba(120, 200, 255, 0.1);
+    }
+
+    .turbo-ring-glow {
+      box-shadow: 0 0 20px rgba(120, 200, 255, 0.4), 0 0 40px rgba(120, 200, 255, 0.15);
+    }
+
+    /* Toggle switch */
+    .toggle-track {
+      width: 40px;
+      height: 22px;
+      border-radius: 11px;
+      background: #d1d5db;
+      position: relative;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .toggle-track.active {
+      background: #38bdf8;
+      box-shadow: 0 0 12px rgba(56, 189, 248, 0.5);
+    }
+
+    .toggle-thumb {
+      width: 18px;
+      height: 18px;
+      border-radius: 50%;
+      background: white;
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      transition: transform 0.3s ease;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-track.active .toggle-thumb {
+      transform: translateX(18px);
     }
 
     /* Background textures */
@@ -90,6 +174,12 @@
 </head>
 <body class="min-h-screen flex items-start justify-center px-4 py-12">
 
+  <!-- Video background for Turbo Mode -->
+  <video id="video-bg" muted loop playsinline>
+    <source src="tunnel.mp4" type="video/mp4">
+  </video>
+  <div id="video-overlay"></div>
+
   <!-- Background texture overlay -->
   <div id="texture-overlay" class="fixed inset-0 pointer-events-none opacity-[0.03]"></div>
 
@@ -100,39 +190,39 @@
       <div class="avatar-ring w-28 h-28 rounded-full border-4 border-gray-800 p-1 mb-4 shadow-lg">
         <img
           id="avatar"
-          src="https://api.dicebear.com/9.x/initials/svg?seed=TS&backgroundColor=1e293b&textColor=f8fafc"
+          src="avatar.jpg"
           alt="Thomas Smith"
           class="w-full h-full rounded-full object-cover"
         />
       </div>
       <h1 class="name-text text-2xl font-bold text-gray-900">Thomas Smith</h1>
-      <p class="bio-text text-sm text-gray-500 mt-1 text-center max-w-xs">Developer, creator, builder of things.</p>
+      <p class="bio-text text-sm text-gray-500 mt-1 text-center max-w-xs">Creative. Jack-of-All-Trades.</p>
     </div>
 
     <!-- Links -->
     <div class="flex flex-col gap-3 mb-10">
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-gray-900 text-white font-semibold text-sm">
+      <a href="https://tomsmith.design" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-gray-900 text-white font-semibold text-sm">
         Portfolio
       </a>
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
-        GitHub
+      <a href="https://theycallmeabohemian.com" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Travel Blog
       </a>
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
-        Twitter / X
+      <a href="https://shop.tomsmith.design" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Shop
       </a>
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+      <a href="https://www.linkedin.com/in/thomas-smith-ab787645/" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
         LinkedIn
       </a>
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
-        Blog
+      <a href="https://github.com/tsmitty11" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        GitHub
       </a>
-      <a href="#" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
-        Email Me
+      <a href="https://www.instagram.com/tomsmith.design" class="link-btn block w-full text-center py-3.5 px-4 rounded-xl border-2 border-gray-800 bg-white text-gray-900 font-semibold text-sm">
+        Instagram
       </a>
     </div>
 
     <!-- Randomize Button -->
-    <div class="flex justify-center">
+    <div class="flex justify-center mb-5">
       <button
         id="randomize-btn"
         onclick="randomize()"
@@ -144,6 +234,14 @@
         </svg>
         Randomize
       </button>
+    </div>
+
+    <!-- Turbo Mode Toggle -->
+    <div class="flex items-center justify-center gap-3">
+      <span id="turbo-label" class="text-xs font-medium text-gray-400 transition-colors duration-500">Turbo Mode</span>
+      <div id="turbo-toggle" class="toggle-track" onclick="toggleTurbo()">
+        <div class="toggle-thumb"></div>
+      </div>
     </div>
 
   </div>
@@ -263,38 +361,116 @@
     ];
 
     let currentSchemeIndex = 0;
+    let turboActive = false;
 
-    function randomize() {
-      // Pick a different scheme than the current one
-      let newIndex;
-      do {
-        newIndex = Math.floor(Math.random() * schemes.length);
-      } while (newIndex === currentSchemeIndex && schemes.length > 1);
-      currentSchemeIndex = newIndex;
+    function toggleTurbo() {
+      turboActive = !turboActive;
+      const toggle = document.getElementById('turbo-toggle');
+      const video = document.getElementById('video-bg');
+      const overlay = document.getElementById('video-overlay');
+      const textureOverlay = document.getElementById('texture-overlay');
+      const turboLabel = document.getElementById('turbo-label');
 
-      const scheme = schemes[newIndex];
-      const texture = textures[Math.floor(Math.random() * textures.length)];
+      if (turboActive) {
+        toggle.classList.add('active');
+        video.play();
+        video.classList.add('active');
+        overlay.classList.add('active');
+        textureOverlay.style.opacity = '0';
+        turboLabel.style.color = '#7dd3fc';
+        turboLabel.style.fontFamily = "'Orbitron', sans-serif";
+        turboLabel.style.letterSpacing = '0.08em';
+        applyTurboScheme();
+      } else {
+        toggle.classList.remove('active');
+        video.classList.remove('active');
+        overlay.classList.remove('active');
+        video.pause();
+        turboLabel.style.color = '#9ca3af';
+        turboLabel.style.fontFamily = "'Inter', sans-serif";
+        turboLabel.style.letterSpacing = 'normal';
+        // Restore the current random scheme
+        applyScheme(schemes[currentSchemeIndex]);
+        textureOverlay.style.opacity = '0.04';
+      }
+    }
 
-      // Apply background
+    function applyTurboScheme() {
+      document.body.style.backgroundColor = '#000a1a';
+
+      // Name and bio
+      const nameEl = document.querySelector('.name-text');
+      nameEl.style.color = '#d4eeff';
+      nameEl.style.fontFamily = "'Orbitron', sans-serif";
+      nameEl.style.letterSpacing = '0.05em';
+      nameEl.classList.add('turbo-glow');
+
+      const bioEl = document.querySelector('.bio-text');
+      bioEl.style.color = '#7dc4e8';
+      bioEl.style.fontFamily = "'Orbitron', sans-serif";
+      bioEl.style.letterSpacing = '0.03em';
+
+      // Avatar ring
+      const ring = document.querySelector('.avatar-ring');
+      ring.style.borderColor = '#38bdf8';
+      ring.classList.add('turbo-ring-glow');
+
+      // Buttons — glassy sci-fi look
+      const buttons = document.querySelectorAll('.link-btn');
+      buttons.forEach((btn, i) => {
+        btn.style.fontFamily = "'Orbitron', sans-serif";
+        btn.style.letterSpacing = '0.08em';
+        btn.classList.add('turbo-btn-glow');
+        if (i === 0) {
+          btn.style.backgroundColor = 'rgba(56, 189, 248, 0.25)';
+          btn.style.borderColor = '#38bdf8';
+          btn.style.color = '#e0f2fe';
+          btn.style.backdropFilter = 'blur(12px)';
+        } else {
+          btn.style.backgroundColor = 'rgba(120, 200, 255, 0.08)';
+          btn.style.borderColor = 'rgba(56, 189, 248, 0.35)';
+          btn.style.color = '#bae6fd';
+          btn.style.backdropFilter = 'blur(12px)';
+        }
+      });
+
+      // Randomize button
+      const randomizeBtn = document.getElementById('randomize-btn');
+      randomizeBtn.style.backgroundColor = 'rgba(56, 189, 248, 0.15)';
+      randomizeBtn.style.color = '#7dd3fc';
+
+    }
+
+    function removeTurboClasses() {
+      document.querySelector('.name-text').classList.remove('turbo-glow');
+      document.querySelector('.name-text').style.fontFamily = "'Inter', sans-serif";
+      document.querySelector('.name-text').style.letterSpacing = 'normal';
+      document.querySelector('.name-text').style.textShadow = 'none';
+
+      document.querySelector('.bio-text').style.fontFamily = "'Inter', sans-serif";
+      document.querySelector('.bio-text').style.letterSpacing = 'normal';
+
+      document.querySelector('.avatar-ring').classList.remove('turbo-ring-glow');
+
+      document.querySelectorAll('.link-btn').forEach(btn => {
+        btn.style.fontFamily = "'Inter', sans-serif";
+        btn.style.letterSpacing = 'normal';
+        btn.style.backdropFilter = 'none';
+        btn.classList.remove('turbo-btn-glow');
+      });
+    }
+
+    function applyScheme(scheme) {
+      removeTurboClasses();
+
       document.body.style.backgroundColor = scheme.bg;
 
-      // Apply texture overlay
-      const overlay = document.getElementById('texture-overlay');
-      overlay.className = 'fixed inset-0 pointer-events-none opacity-[0.04]';
-      if (texture !== 'none') {
-        overlay.classList.add(texture);
-        overlay.style.color = scheme.textureTint;
-      }
-
-      // Apply name and bio colors
       document.querySelector('.name-text').style.color = scheme.name;
       document.querySelector('.bio-text').style.color = scheme.bio;
 
-      // Apply avatar ring
       const ring = document.querySelector('.avatar-ring');
       ring.style.borderColor = scheme.ring;
 
-      // Apply button styles
       const buttons = document.querySelectorAll('.link-btn');
       buttons.forEach((btn, i) => {
         if (i === 0) {
@@ -308,17 +484,40 @@
         }
       });
 
-      // Apply randomize button styles
       const randomizeBtn = document.getElementById('randomize-btn');
       randomizeBtn.style.backgroundColor = scheme.randomize.bg;
       randomizeBtn.style.color = scheme.randomize.text;
 
-      // Update avatar background to match scheme
-      const avatar = document.getElementById('avatar');
-      const avatarBg = scheme.primaryBtn.bg.replace('#', '');
-      const avatarText = scheme.primaryBtn.text.replace('#', '');
-      avatar.src = `https://api.dicebear.com/9.x/initials/svg?seed=TS&backgroundColor=${avatarBg}&textColor=${avatarText}`;
     }
+
+    function randomize() {
+      // If turbo mode is on, don't randomize the scheme
+      if (turboActive) return;
+
+      // Pick a different scheme than the current one
+      let newIndex;
+      do {
+        newIndex = Math.floor(Math.random() * schemes.length);
+      } while (newIndex === currentSchemeIndex && schemes.length > 1);
+      currentSchemeIndex = newIndex;
+
+      const scheme = schemes[newIndex];
+      const texture = textures[Math.floor(Math.random() * textures.length)];
+
+      // Apply scheme
+      applyScheme(scheme);
+
+      // Apply texture overlay
+      const textureOverlay = document.getElementById('texture-overlay');
+      textureOverlay.className = 'fixed inset-0 pointer-events-none opacity-[0.04]';
+      if (texture !== 'none') {
+        textureOverlay.classList.add(texture);
+        textureOverlay.style.color = scheme.textureTint;
+      }
+    }
+
+    // Start with a random scheme on page load
+    randomize();
   </script>
 
 </body>
