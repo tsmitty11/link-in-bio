@@ -182,7 +182,7 @@
 <body class="min-h-screen flex items-start justify-center px-4 py-12">
 
   <!-- Video background for Turbo Mode -->
-  <video id="video-bg" muted loop playsinline>
+  <video id="video-bg" muted loop playsinline preload="auto">
     <source src="tunnel.mp4" type="video/mp4">
   </video>
   <div id="video-overlay"></div>
@@ -405,14 +405,24 @@
 
       if (turboActive) {
         toggle.classList.add('active');
-        video.play();
-        video.classList.add('active');
-        overlay.classList.add('active');
         textureOverlay.style.opacity = '0';
         turboLabel.style.color = '#7dd3fc';
         turboLabel.style.fontFamily = "'Orbitron', sans-serif";
         turboLabel.style.letterSpacing = '0.08em';
         applyTurboScheme();
+
+        // Wait for video to be ready, then play and fade in
+        const showVideo = () => {
+          video.play();
+          video.classList.add('active');
+          overlay.classList.add('active');
+        };
+        if (video.readyState >= 3) {
+          showVideo();
+        } else {
+          video.addEventListener('canplay', showVideo, { once: true });
+          video.load();
+        }
       } else {
         toggle.classList.remove('active');
         video.classList.remove('active');
