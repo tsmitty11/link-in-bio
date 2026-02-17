@@ -28,6 +28,12 @@
     body {
       font-family: 'Inter', sans-serif;
       transition: background-color 0.5s ease, background-image 0.5s ease;
+      min-height: 100vh;
+      min-height: 100dvh;
+    }
+
+    body.turbo-active {
+      background-color: transparent !important;
     }
 
     .link-btn {
@@ -65,14 +71,18 @@
     /* Video background */
     #video-bg {
       position: fixed;
-      inset: 0;
-      width: 100%;
-      height: 100%;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
       object-fit: cover;
       z-index: 0;
       opacity: 0;
       transition: opacity 0.8s ease;
       pointer-events: none;
+      -webkit-transform: translateZ(0);
+      transform: translateZ(0);
     }
 
     #video-bg.active {
@@ -82,7 +92,11 @@
     /* Dark overlay for video readability */
     #video-overlay {
       position: fixed;
-      inset: 0;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      height: 100dvh;
       background: rgba(0, 5, 20, 0.55);
       z-index: 1;
       opacity: 0;
@@ -191,7 +205,7 @@
 <body class="min-h-screen flex items-start justify-center px-4 py-12">
 
   <!-- Video background for Turbo Mode -->
-  <video id="video-bg" muted loop playsinline preload="auto">
+  <video id="video-bg" muted loop playsinline webkit-playsinline preload="auto">
     <source src="tunnel.mp4" type="video/mp4">
   </video>
   <div id="video-overlay"></div>
@@ -417,6 +431,7 @@
 
       if (turboActive) {
         toggle.classList.add('active');
+        document.body.classList.add('turbo-active');
         textureOverlay.style.opacity = '0';
         turboLabel.style.color = '#7dd3fc';
         turboLabel.style.fontFamily = "'Orbitron', sans-serif";
@@ -437,6 +452,7 @@
         }
       } else {
         toggle.classList.remove('active');
+        document.body.classList.remove('turbo-active');
         video.classList.remove('active');
         overlay.classList.remove('active');
         video.pause();
