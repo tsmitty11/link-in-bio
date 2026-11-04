@@ -243,14 +243,14 @@ footer {
   }
 }
 
-/* Keep mobile home links and copyright at the bottom of the visible viewport.
+/* Start mobile home content at the top of the visible viewport.
    The portrait gives up space first; shorter screens also tighten the controls. */
 .home-page {
   --home-gap: clamp(6px, 1.17dvh, 10px);
   --home-section-gap: clamp(10px, 2.93dvh, 25px);
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   min-height: 100svh;
   height: 100dvh;
   padding-top: max(12px, env(safe-area-inset-top));
@@ -299,7 +299,8 @@ footer {
     display: grid;
     max-width: 800px;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: minmax(0, 1fr) auto;
+    grid-template-rows: minmax(0, 326px) auto;
+    align-content: start;
     align-items: end;
     gap: 16px 24px;
   }
@@ -314,6 +315,17 @@ footer {
   .home-page footer {
     grid-column: 1 / -1;
     margin-top: 0;
+  }
+}
+
+/* Once a fifth main link is added, let mobile content grow and scroll naturally. */
+@media (max-width: 1023px) {
+  .home-page:has(.links > .link:nth-of-type(5)) {
+    height: auto;
+  }
+
+  .home-page:has(.links > .link:nth-of-type(5)) .profile {
+    flex-shrink: 0;
   }
 }
 
