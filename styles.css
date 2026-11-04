@@ -201,6 +201,80 @@ footer {
   }
 }
 
+/* Keep the home links and copyright at the bottom of the visible viewport.
+   The portrait gives up space first; shorter screens also tighten the controls. */
+.home-page {
+  --home-gap: clamp(6px, 1.17dvh, 10px);
+  --home-section-gap: clamp(10px, 2.93dvh, 25px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  min-height: 100svh;
+  height: 100dvh;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(clamp(8px, 2.35dvh, 20px), env(safe-area-inset-bottom));
+}
+
+.home-page .profile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 0 1 326px;
+  min-height: 60px;
+  margin-bottom: var(--home-section-gap);
+}
+
+.home-page .portrait {
+  flex: 0 1 266px;
+  min-height: 0;
+}
+
+.home-page h1,
+.home-page .bio,
+.home-page .links,
+.home-page footer {
+  flex-shrink: 0;
+}
+
+.home-page .links,
+.home-page .social-links {
+  gap: var(--home-gap);
+}
+
+.home-page .link,
+.home-page .social-link {
+  min-height: clamp(44px, 10dvh, 74px);
+  padding-block: clamp(10px, calc(5dvh - 12px), 25px);
+}
+
+.home-page footer {
+  margin-top: var(--home-section-gap);
+}
+
+/* A short landscape screen has more room beside the portrait than below it. */
+@media (max-height: 500px) and (min-width: 600px) {
+  .home-page {
+    display: grid;
+    max-width: 800px;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: minmax(0, 1fr) auto;
+    align-items: end;
+    gap: 16px 24px;
+  }
+
+  .home-page .profile {
+    height: 100%;
+    max-height: 326px;
+    margin-bottom: 0;
+    justify-content: flex-end;
+  }
+
+  .home-page footer {
+    grid-column: 1 / -1;
+    margin-top: 0;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .glass {
     transition: none;
