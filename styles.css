@@ -133,12 +133,16 @@ footer {
 }
 
 .ventures-page {
+  position: relative;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
 }
 
 .back-link {
+  position: absolute;
+  top: 29px;
+  left: 20px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -196,9 +200,13 @@ footer {
     padding-top: 48px;
     padding-bottom: 32px;
   }
+
+  .back-link {
+    top: 48px;
+  }
 }
 
-/* Keep the home links and copyright at the bottom of the visible viewport.
+/* Keep mobile home links and copyright at the bottom of the visible viewport.
    The portrait gives up space first; shorter screens also tighten the controls. */
 .home-page {
   --home-gap: clamp(6px, 1.17dvh, 10px);
@@ -269,6 +277,20 @@ footer {
   .home-page footer {
     grid-column: 1 / -1;
     margin-top: 0;
+  }
+}
+
+@media (min-width: 1024px) {
+  .home-page {
+    justify-content: center;
+    padding-block: 20px;
+  }
+}
+
+@media (min-width: 1024px) and (max-height: 500px) {
+  .home-page {
+    grid-template-rows: minmax(0, 326px) auto;
+    align-content: center;
   }
 }
 
