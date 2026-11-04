@@ -141,15 +141,14 @@ footer {
 .back-link {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   align-self: flex-start;
-  gap: 8px;
-  min-height: 44px;
-  font-size: 14px;
-}
-
-.back-link:hover {
-  text-decoration: underline;
-  text-underline-offset: 4px;
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  min-height: 48px;
+  aspect-ratio: 1;
+  flex: none;
 }
 
 .ventures-header {
@@ -165,28 +164,26 @@ footer {
 }
 
 .venture-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  min-height: 112px;
-  padding: 25px;
+  position: relative;
+  display: block;
+  aspect-ratio: 40 / 21;
+  overflow: hidden;
+  isolation: isolate;
 }
 
-.venture-name {
+.venture-image {
   display: block;
-  font-size: 18px;
-  font-weight: 600;
-  line-height: 27px;
+  width: 100%;
+  height: auto;
 }
 
-.venture-domain {
-  display: block;
-  margin-top: 5px;
-  font-size: 14px;
-  line-height: 21px;
-  color: #626865;
-  overflow-wrap: anywhere;
+.venture-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: var(--glass-shadow);
+  pointer-events: none;
 }
 
 .ventures-page footer {
