@@ -272,31 +272,30 @@ footer {
   }
 }
 
-/* Start mobile home content at the top of the visible viewport.
-   The portrait gives up space first; shorter screens also tighten the controls. */
+/* Stable viewport sizing keeps browser toolbar changes from shifting content.
+   Let the page grow naturally when its content exceeds the screen height. */
 .home-page {
-  --home-gap: clamp(6px, 1.17dvh, 10px);
-  --home-section-gap: clamp(10px, 2.93dvh, 25px);
+  --home-gap: clamp(6px, 1.17svh, 10px);
+  --home-section-gap: clamp(10px, 2.93svh, 25px);
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   min-height: 100svh;
-  height: 100dvh;
   padding-top: max(12px, env(safe-area-inset-top));
-  padding-bottom: max(clamp(8px, 2.35dvh, 20px), env(safe-area-inset-bottom));
+  padding-bottom: max(clamp(8px, 2.35svh, 20px), env(safe-area-inset-bottom));
 }
 
 .home-page .profile {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex: 0 1 260px;
+  flex: 0 0 auto;
   min-height: 60px;
   margin-bottom: var(--home-section-gap);
 }
 
 .home-page .portrait {
-  flex: 0 1 200px;
+  flex: 0 0 200px;
   min-height: 0;
 }
 
@@ -314,8 +313,8 @@ footer {
 
 .home-page .link,
 .home-page .social-link {
-  min-height: clamp(44px, 10dvh, 74px);
-  padding-block: clamp(10px, calc(5dvh - 12px), 25px);
+  min-height: clamp(44px, 10svh, 74px);
+  padding-block: clamp(10px, calc(5svh - 12px), 25px);
 }
 
 .home-page footer {
@@ -344,17 +343,6 @@ footer {
   .home-page footer {
     grid-column: 1 / -1;
     margin-top: 0;
-  }
-}
-
-/* Once a fifth main link is added, let mobile content grow and scroll naturally. */
-@media (max-width: 1023px) {
-  .home-page:has(.links > .link:nth-of-type(5)) {
-    height: auto;
-  }
-
-  .home-page:has(.links > .link:nth-of-type(5)) .profile {
-    flex-shrink: 0;
   }
 }
 
